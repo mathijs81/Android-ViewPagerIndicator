@@ -18,6 +18,7 @@ package com.viewpagerindicator;
 
 import static android.view.ViewGroup.LayoutParams.FILL_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import cmn.AndroidSDK;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.view.PagerAdapter;
@@ -153,7 +154,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
     private void addTab(CharSequence text, int index) {
         final TabView tabView = new TabView(getContext());
         if (tabBackgroundDrawable != null) {          
-            tabView.setBackgroundDrawable(tabBackgroundDrawable.getConstantState().newDrawable().mutate());
+            tabView.setBackgroundDrawable(AndroidSDK.get().copyDrawable(tabBackgroundDrawable, getResources()));
         }
         tabView.mIndex = index;
         tabView.setFocusable(true);
@@ -260,7 +261,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         for (int i = 0; i < tabCount; i++) {
             final View child = mTabLayout.getChildAt(i);
             if (child != null) {
-                child.setBackgroundDrawable(tabBackgroundDrawable.getConstantState().newDrawable().mutate());
+                child.setBackgroundDrawable(AndroidSDK.get().copyDrawable(tabBackgroundDrawable, getResources()));
             }
         } 
         mTabLayout.requestLayout();
