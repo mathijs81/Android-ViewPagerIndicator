@@ -154,7 +154,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
     private void addTab(CharSequence text, int index) {
         final TabView tabView = new TabView(getContext());
         if (tabBackgroundDrawable != null) {          
-            tabView.setBackgroundDrawable(AndroidSDK.get().copyDrawable(tabBackgroundDrawable, getResources()));
+            setBackgroundKeepingPadding(tabView);
         }
         tabView.mIndex = index;
         tabView.setFocusable(true);
@@ -255,13 +255,22 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         mListener = listener;
     }
     
+    private void setBackgroundKeepingPadding(View view) {
+        int bottom = view.getPaddingBottom();
+        int top = view.getPaddingTop();
+        int left = view.getPaddingLeft();
+        int right = view.getPaddingRight();
+        view.setBackgroundDrawable(AndroidSDK.get().copyDrawable(tabBackgroundDrawable, getResources()));
+        view.setPadding(left, top, right, bottom);
+    }
+    
     public void setTabBackgroundDrawable(Drawable drawable) {
         tabBackgroundDrawable = drawable;
         final int tabCount = mTabLayout.getChildCount();
         for (int i = 0; i < tabCount; i++) {
             final View child = mTabLayout.getChildAt(i);
             if (child != null) {
-                child.setBackgroundDrawable(AndroidSDK.get().copyDrawable(tabBackgroundDrawable, getResources()));
+                setBackgroundKeepingPadding(child);
             }
         } 
         mTabLayout.requestLayout();
