@@ -16,7 +16,10 @@
  */
 package com.viewpagerindicator;
 
+import static android.view.ViewGroup.LayoutParams.FILL_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -26,9 +29,6 @@ import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import static android.view.ViewGroup.LayoutParams.FILL_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
  * This widget implements the dynamic action bar tab behavior that can change
@@ -72,6 +72,8 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
     private int mSelectedTabIndex;
 
     private OnTabReselectedListener mTabReselectedListener;
+    
+    private Drawable tabBackgroundDrawable = null;
 
     public TabPageIndicator(Context context) {
         this(context, null);
@@ -150,12 +152,19 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
 
     private void addTab(CharSequence text, int index) {
         final TabView tabView = new TabView(getContext());
+        if (tabBackgroundDrawable != null) {          
+            tabView.setBackgroundDrawable(tabBackgroundDrawable.getConstantState().newDrawable().mutate());
+        }
         tabView.mIndex = index;
         tabView.setFocusable(true);
         tabView.setOnClickListener(mTabClickListener);
         tabView.setText(text);
 
-        mTabLayout.addView(tabView, new LinearLayout.LayoutParams(0, FILL_PARENT, 1));
+        // mTabLayout.addView(tabView, new LinearLayout.LayoutParams(0, FILL_PARENT, 1));
+        
+        // Have tabs get at least the width of their content. Otherwise the width calculation of LinearLayout does weird
+        // things when there are tabs with very differing widths.
+        mTabLayout.addView(tabView, new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.FILL_PARENT, 1));
     }
 
     @Override
@@ -243,6 +252,19 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
     @Override
     public void setOnPageChangeListener(OnPageChangeListener listener) {
         mListener = listener;
+    }
+    
+    public void setTabBackgroundDrawable(Drawable drawable) {
+        tabBackgroundDrawable = drawable;
+        final int tabCount = mTabLayout.getChildCount();
+        for (int i = 0; i < tabCount; i++) {
+            final View child = mTabLayout.getChildAt(i);
+            if (child != null) {
+                child.setBackgroundDrawable(tabBackgroundDrawable.getConstantState().newDrawable().mutate());
+            }
+        } 
+        mTabLayout.requestLayout();
+        requestLayout();
     }
 
     private class TabView extends TextView {
