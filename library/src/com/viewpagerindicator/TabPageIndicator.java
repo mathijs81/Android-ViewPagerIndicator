@@ -18,7 +18,7 @@ package com.viewpagerindicator;
 
 import static android.view.ViewGroup.LayoutParams.FILL_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import cmn.AndroidSDK;
+import scm.drawable.DrawableHelper;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.view.PagerAdapter;
@@ -260,7 +260,7 @@ public class TabPageIndicator extends HorizontalScrollView implements PageIndica
         int top = view.getPaddingTop();
         int left = view.getPaddingLeft();
         int right = view.getPaddingRight();
-        view.setBackgroundDrawable(AndroidSDK.get().copyDrawable(tabBackgroundDrawable, getResources()));
+        view.setBackgroundDrawable(DrawableHelper.copyDrawable(tabBackgroundDrawable, getResources()));
         view.setPadding(left, top, right, bottom);
     }
     
