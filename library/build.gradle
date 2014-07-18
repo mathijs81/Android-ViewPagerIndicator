@@ -1,0 +1,5 @@
+apply plugin: 'com.android.library'
+dependencies {
+	compile fileTree(dir: 'libs', include: '*.jar')
+}
+apply from: "$rootDir/scm_android.gradle"
