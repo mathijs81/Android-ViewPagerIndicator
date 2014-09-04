@@ -11,3 +11,4 @@ classes
 target
 release.properties
 pom.xml.*
+build/
