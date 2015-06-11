@@ -12,3 +12,8 @@ target
 release.properties
 pom.xml.*
 build/
+
+# Android Studio related files
+*.iml
+.idea
+local.properties

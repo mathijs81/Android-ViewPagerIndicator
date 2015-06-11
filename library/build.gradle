@@ -1,3 +1,7 @@
+buildscript {
+    apply from: '../../scm_buildscript.gradle', to: buildscript
+}
+
 apply plugin: 'com.android.library'
 dependencies {
 	compile fileTree(dir: 'libs', include: '*.jar')
@@ -5,4 +9,4 @@ dependencies {
 	compile project(':android-support-v7-appcompat')
 
 }
-apply from: "$rootDir/scm_android.gradle"
+apply from: '../../scm_android.gradle'

@@ -1,0 +1,4 @@
+apply from: '../../scm_settings.gradle'
+
+includeRecursive 'acommon'
+includeRecursive 'android-support-v7-appcompat'
