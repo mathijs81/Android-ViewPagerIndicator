@@ -3,10 +3,10 @@ buildscript {
 }
 
 apply plugin: 'com.android.library'
-dependencies {
-	compile fileTree(dir: 'libs', include: '*.jar')
-	compile project(':acommon')
-	compile project(':android-support-v7-appcompat')
-
-}
 apply from: '../../scm_android.gradle'
+
+dependencies {
+    compile fileTree(dir: 'libs', include: '*.jar')
+    compile project(':acommon')
+    compile libSupportV4
+}
